@@ -12,7 +12,7 @@ using SystemSkarbnik.Data;
 namespace SystemSkarbnik.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231128084624_init")]
+    [Migration("20231128091252_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
