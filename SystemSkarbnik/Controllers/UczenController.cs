@@ -50,7 +50,7 @@ namespace SystemSkarbnik.Controllers
         // GET: Uczen/Create
         public IActionResult Create()
         {
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID");
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa");
             return View();
         }
 
@@ -67,7 +67,7 @@ namespace SystemSkarbnik.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID", uczen.KlasaID);
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa", uczen.KlasaID);
             return View(uczen);
         }
 
@@ -84,7 +84,7 @@ namespace SystemSkarbnik.Controllers
             {
                 return NotFound();
             }
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID", uczen.KlasaID);
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa", uczen.KlasaID);
             return View(uczen);
         }
 
@@ -120,7 +120,7 @@ namespace SystemSkarbnik.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID", uczen.KlasaID);
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "NAzwa", uczen.KlasaID);
             return View(uczen);
         }
 

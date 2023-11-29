@@ -92,6 +92,7 @@ namespace SystemSkarbnik.Areas.Identity.Pages.Account
 
             public int KlasaID { get; set; }
             public Klasa? Klasa { get; set; } = null!;
+            
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
