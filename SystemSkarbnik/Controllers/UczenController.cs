@@ -11,7 +11,7 @@ using SystemSkarbnik.Models;
 
 namespace SystemSkarbnik.Controllers
 {
-    [Authorize(Roles = "Skarbnik")]
+    // [Authorize(Roles = "Skarbnik")]
     public class UczenController : Controller
     {
         private readonly ApplicationDbContext _context;

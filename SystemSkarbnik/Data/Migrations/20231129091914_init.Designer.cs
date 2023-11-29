@@ -12,7 +12,7 @@ using SystemSkarbnik.Data;
 namespace SystemSkarbnik.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231129075309_init")]
+    [Migration("20231129091914_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,10 +88,6 @@ namespace SystemSkarbnik.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -143,8 +139,6 @@ namespace SystemSkarbnik.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -298,9 +292,15 @@ namespace SystemSkarbnik.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UczenUserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("ID");
 
                     b.HasIndex("KlasaID");
+
+                    b.HasIndex("UczenUserID");
 
                     b.ToTable("Uczen");
                 });
@@ -379,26 +379,6 @@ namespace SystemSkarbnik.Data.Migrations
                     b.ToTable("ZbiorkaUczen");
                 });
 
-            modelBuilder.Entity("SystemSkarbnik.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<int>("KlasaID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("KlasaID");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -469,7 +449,15 @@ namespace SystemSkarbnik.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UczenUser")
+                        .WithMany()
+                        .HasForeignKey("UczenUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Klasa");
+
+                    b.Navigation("UczenUser");
                 });
 
             modelBuilder.Entity("SystemSkarbnik.Models.Zbiorka", b =>
@@ -518,21 +506,8 @@ namespace SystemSkarbnik.Data.Migrations
                     b.Navigation("Zbiorka");
                 });
 
-            modelBuilder.Entity("SystemSkarbnik.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("SystemSkarbnik.Models.Klasa", "Klasa")
-                        .WithMany("ApplicationUser")
-                        .HasForeignKey("KlasaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Klasa");
-                });
-
             modelBuilder.Entity("SystemSkarbnik.Models.Klasa", b =>
                 {
-                    b.Navigation("ApplicationUser");
-
                     b.Navigation("Skarbnik");
 
                     b.Navigation("Uczen");

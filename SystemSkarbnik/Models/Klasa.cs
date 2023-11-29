@@ -9,7 +9,6 @@
         public ICollection<Uczen> Uczen { get; } = new List<Uczen>();
         public ICollection<Zbiorka> Zbiorkas { get; } = new List<Zbiorka>();
         public ICollection<ZbiorkaUczen> ZbiorkaUczens { get; } = new List<ZbiorkaUczen>();
-        public ICollection<ApplicationUser> ApplicationUser { get; } = new List<ApplicationUser>();
 
     }
 }

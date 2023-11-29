@@ -9,31 +9,6 @@ namespace SystemSkarbnik.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Discriminator",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<int>(
-                name: "KlasaID",
-                table: "AspNetUsers",
-                type: "int",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Name",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Surname",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Klasa",
                 columns: table => new
@@ -77,11 +52,18 @@ namespace SystemSkarbnik.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Imię = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nazwisko = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    KlasaID = table.Column<int>(type: "int", nullable: false)
+                    KlasaID = table.Column<int>(type: "int", nullable: false),
+                    UczenUserID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Uczen", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Uczen_AspNetUsers_UczenUserID",
+                        column: x => x.UczenUserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Uczen_Klasa_KlasaID",
                         column: x => x.KlasaID,
@@ -157,11 +139,6 @@ namespace SystemSkarbnik.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_KlasaID",
-                table: "AspNetUsers",
-                column: "KlasaID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Skarbnik_KlasaID",
                 table: "Skarbnik",
                 column: "KlasaID");
@@ -170,6 +147,11 @@ namespace SystemSkarbnik.Data.Migrations
                 name: "IX_Uczen_KlasaID",
                 table: "Uczen",
                 column: "KlasaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Uczen_UczenUserID",
+                table: "Uczen",
+                column: "UczenUserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Zbiorka_KlasaID",
@@ -195,22 +177,10 @@ namespace SystemSkarbnik.Data.Migrations
                 name: "IX_ZbiorkaUczen_ZbiorkaID",
                 table: "ZbiorkaUczen",
                 column: "ZbiorkaID");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUsers_Klasa_KlasaID",
-                table: "AspNetUsers",
-                column: "KlasaID",
-                principalTable: "Klasa",
-                principalColumn: "ID",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_AspNetUsers_Klasa_KlasaID",
-                table: "AspNetUsers");
-
             migrationBuilder.DropTable(
                 name: "ZbiorkaUczen");
 
@@ -225,26 +195,6 @@ namespace SystemSkarbnik.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Klasa");
-
-            migrationBuilder.DropIndex(
-                name: "IX_AspNetUsers_KlasaID",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "Discriminator",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "KlasaID",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "Name",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "Surname",
-                table: "AspNetUsers");
         }
     }
 }
