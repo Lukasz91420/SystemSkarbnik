@@ -52,7 +52,7 @@ namespace SystemSkarbnik.Controllers
         // GET: ZbiorkaUczen/Create
         public IActionResult Create()
         {
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID");
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa");
             ViewData["UczenID"] = new SelectList(_context.Uczen, "ID", "ID");
             ViewData["ZbiorkaID"] = new SelectList(_context.Zbiorka, "ID", "ID");
             return View();

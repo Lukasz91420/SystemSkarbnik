@@ -12,7 +12,7 @@ using SystemSkarbnik.Data;
 namespace SystemSkarbnik.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231129091914_init")]
+    [Migration("20231129125643_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -266,9 +266,15 @@ namespace SystemSkarbnik.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SkarbnikUserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("ID");
 
                     b.HasIndex("KlasaID");
+
+                    b.HasIndex("SkarbnikUserID");
 
                     b.ToTable("Skarbnik");
                 });
@@ -438,7 +444,15 @@ namespace SystemSkarbnik.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "SkarbnikUser")
+                        .WithMany()
+                        .HasForeignKey("SkarbnikUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Klasa");
+
+                    b.Navigation("SkarbnikUser");
                 });
 
             modelBuilder.Entity("SystemSkarbnik.Models.Uczen", b =>

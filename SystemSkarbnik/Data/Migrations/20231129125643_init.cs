@@ -31,11 +31,18 @@ namespace SystemSkarbnik.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Imię = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nazwisko = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    KlasaID = table.Column<int>(type: "int", nullable: false)
+                    KlasaID = table.Column<int>(type: "int", nullable: false),
+                    SkarbnikUserID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Skarbnik", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Skarbnik_AspNetUsers_SkarbnikUserID",
+                        column: x => x.SkarbnikUserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Skarbnik_Klasa_KlasaID",
                         column: x => x.KlasaID,
@@ -142,6 +149,11 @@ namespace SystemSkarbnik.Data.Migrations
                 name: "IX_Skarbnik_KlasaID",
                 table: "Skarbnik",
                 column: "KlasaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Skarbnik_SkarbnikUserID",
+                table: "Skarbnik",
+                column: "SkarbnikUserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Uczen_KlasaID",

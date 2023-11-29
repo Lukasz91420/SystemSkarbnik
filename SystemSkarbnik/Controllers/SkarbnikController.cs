@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,16 +16,20 @@ namespace SystemSkarbnik.Controllers
     [Authorize(Roles = "Skarbnik")]
     public class SkarbnikController : Controller
     {
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public SkarbnikController(ApplicationDbContext context)
+        public SkarbnikController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Skarbnik
         public async Task<IActionResult> Index()
         {
+
+
             var applicationDbContext = _context.Skarbnik.Include(s => s.Klasa);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -51,6 +57,7 @@ namespace SystemSkarbnik.Controllers
         public IActionResult Create()
         {
             ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa");
+            ViewData["SkarbnikUserID"] = new SelectList(_context.Users, "Id", "Email");
             return View();
         }
 
@@ -59,15 +66,23 @@ namespace SystemSkarbnik.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Imię,Nazwisko,KlasaID")] Skarbnik skarbnik)
+        public async Task<IActionResult> Create([Bind("ID,Imię,Nazwisko,KlasaID,SkarbnikUserID")] Skarbnik skarbnik)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(skarbnik);
                 await _context.SaveChangesAsync();
+
+                var user = await _userManager.FindByIdAsync(skarbnik.SkarbnikUserID);
+                if (!await _userManager.IsInRoleAsync(user, "Skarbnik"))
+                {
+                    await _userManager.AddToRoleAsync(user, "Skarbnik");
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa", skarbnik.KlasaID);
+            ViewData["SkarbnikUserID"] = new SelectList(_context.Users, "Id", "Email");
             return View(skarbnik);
         }
 

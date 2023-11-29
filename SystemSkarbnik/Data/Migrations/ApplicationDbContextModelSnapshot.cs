@@ -264,9 +264,15 @@ namespace SystemSkarbnik.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SkarbnikUserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("ID");
 
                     b.HasIndex("KlasaID");
+
+                    b.HasIndex("SkarbnikUserID");
 
                     b.ToTable("Skarbnik");
                 });
@@ -436,7 +442,15 @@ namespace SystemSkarbnik.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "SkarbnikUser")
+                        .WithMany()
+                        .HasForeignKey("SkarbnikUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Klasa");
+
+                    b.Navigation("SkarbnikUser");
                 });
 
             modelBuilder.Entity("SystemSkarbnik.Models.Uczen", b =>
