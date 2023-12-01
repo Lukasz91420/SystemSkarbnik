@@ -11,6 +11,7 @@ using SystemSkarbnik.Models;
 
 namespace SystemSkarbnik.Controllers
 {
+    [Authorize]
     public class ZbiorkaController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -53,15 +54,16 @@ namespace SystemSkarbnik.Controllers
 
             return View(zbiorka);
         }
-        //[Authorize(Roles = "Skarbnik")]
+        [Authorize(Roles = "Skarbnik")]
         // GET: Zbiorka/Create
         public IActionResult Create()
         {
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID");
-            ViewData["SkarbnikID"] = new SelectList(_context.Skarbnik, "ID", "ID");
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa");
+            ViewData["SkarbnikID"] = new SelectList(_context.Skarbnik, "ID", "Imię");
+            ViewData["SkarbnikID2"] = new SelectList(_context.Skarbnik, "ID", "Nazwisko");
             return View();
         }
-        //[Authorize(Roles = "Skarbnik")]
+        [Authorize(Roles = "Skarbnik")]
         // POST: Zbiorka/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -75,11 +77,12 @@ namespace SystemSkarbnik.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID", zbiorka.KlasaID);
-            ViewData["SkarbnikID"] = new SelectList(_context.Skarbnik, "ID", "ID", zbiorka.SkarbnikID);
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa", zbiorka.KlasaID);
+            ViewData["SkarbnikID"] = new SelectList(_context.Skarbnik, "ID", "Imię", zbiorka.SkarbnikID);
+            ViewData["SkarbnikID2"] = new SelectList(_context.Skarbnik, "ID", "Nazwisko", zbiorka.SkarbnikID);
             return View(zbiorka);
         }
-        //[Authorize(Roles = "Skarbnik")]
+        [Authorize(Roles = "Skarbnik")]
         // GET: Zbiorka/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -93,11 +96,12 @@ namespace SystemSkarbnik.Controllers
             {
                 return NotFound();
             }
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID", zbiorka.KlasaID);
-            ViewData["SkarbnikID"] = new SelectList(_context.Skarbnik, "ID", "ID", zbiorka.SkarbnikID);
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa", zbiorka.KlasaID);
+            ViewData["SkarbnikID"] = new SelectList(_context.Skarbnik, "ID", "Imię", zbiorka.SkarbnikID);
+            ViewData["SkarbnikID2"] = new SelectList(_context.Skarbnik, "ID", "Nazwisko", zbiorka.SkarbnikID);
             return View(zbiorka);
         }
-        //[Authorize(Roles = "Skarbnik")]
+        [Authorize(Roles = "Skarbnik")]
         // POST: Zbiorka/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -130,11 +134,12 @@ namespace SystemSkarbnik.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID", zbiorka.KlasaID);
-            ViewData["SkarbnikID"] = new SelectList(_context.Skarbnik, "ID", "ID", zbiorka.SkarbnikID);
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa", zbiorka.KlasaID);
+            ViewData["SkarbnikID"] = new SelectList(_context.Skarbnik, "ID", "Imię", zbiorka.SkarbnikID);
+            ViewData["SkarbnikID2"] = new SelectList(_context.Skarbnik, "ID", "Nazwisko", zbiorka.SkarbnikID);
             return View(zbiorka);
         }
-        //[Authorize(Roles = "Skarbnik")]
+        [Authorize(Roles = "Skarbnik")]
         // GET: Zbiorka/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -154,7 +159,7 @@ namespace SystemSkarbnik.Controllers
 
             return View(zbiorka);
         }
-        //[Authorize(Roles = "Skarbnik")]
+        [Authorize(Roles = "Skarbnik")]
         // POST: Zbiorka/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

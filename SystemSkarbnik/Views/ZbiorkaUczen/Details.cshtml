@@ -1,48 +1,53 @@
 ﻿@model SystemSkarbnik.Models.ZbiorkaUczen
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "";
 }
 
-<h1>Detale</h1>
-
+<h1>Detale płatności</h1>
+<br />
 <div>
-    <h4>Zbiórka - płatności</h4>
-    <hr />
+    
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Zbiorka)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Zbiorka.ID)
+            @Html.DisplayFor(model => model.Zbiorka.Nazwa)
         </dd>
+        <hr />
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Klasa)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Klasa.ID)
+            @Html.DisplayFor(model => model.Klasa.Nazwa)
         </dd>
+        <hr />
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Uczen)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Uczen.ID)
+            @Html.DisplayFor(model => model.Uczen.Imię)
         </dd>
+        <hr />
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CzyZaplacil)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CzyZaplacil)
         </dd>
+      <hr />
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.KiedyZaplacil)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.KiedyZaplacil)
         </dd>
+      <hr />
     </dl>
 </div>
 <div>
+    <br />
     <a asp-action="Edit" asp-route-id="@Model?.ID">Edytuj</a> |
     <a asp-action="Index">Wróć do listy</a>
 </div>

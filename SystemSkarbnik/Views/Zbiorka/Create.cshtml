@@ -1,12 +1,10 @@
 ﻿@model SystemSkarbnik.Models.Zbiorka
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "";
 }
 
-<h1>Create</h1>
-
-<h4>Zbiorka</h4>
+<h1>Utwórz nową zbiórkę</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -45,8 +43,9 @@
                 <label asp-for="SkarbnikID" class="control-label"></label>
                 <select asp-for="SkarbnikID" class ="form-control" asp-items="ViewBag.SkarbnikID"></select>
             </div>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Utwórz" class="btn btn-primary" />
             </div>
         </form>
     </div>

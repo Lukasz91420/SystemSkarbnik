@@ -1,7 +1,10 @@
-﻿namespace SystemSkarbnik.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SystemSkarbnik.Models
 {
     public class Klasa
     {
+ 
         public int ID { get; set; }
         public string Nazwa { get; set; }    
         public string Opis { get; set; }

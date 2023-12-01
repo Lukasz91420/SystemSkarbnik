@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<SystemSkarbnik.Models.ZbiorkaUczen>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "";
 }
 
 <h1>Zbiórki - płatności</h1>
 
 <p>
-    <a asp-action="Create">Utwórz</a>
+    <a asp-action="Create">Utwórz nową płatność do zbiórki</a>
 </p>
 <table class="table">
     <thead>
@@ -34,13 +34,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Zbiorka.ID)
+                @Html.DisplayFor(modelItem => item.Zbiorka.Nazwa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Klasa.ID)
+                @Html.DisplayFor(modelItem => item.Klasa.Nazwa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Uczen.ID)
+                @Html.DisplayFor(modelItem => item.Uczen.Imię)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CzyZaplacil)
@@ -49,9 +49,9 @@
                 @Html.DisplayFor(modelItem => item.KiedyZaplacil)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edytuj</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Detale</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Usuń</a>
             </td>
         </tr>
 }

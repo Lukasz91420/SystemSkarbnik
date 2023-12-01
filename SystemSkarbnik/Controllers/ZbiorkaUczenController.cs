@@ -53,8 +53,8 @@ namespace SystemSkarbnik.Controllers
         public IActionResult Create()
         {
             ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa");
-            ViewData["UczenID"] = new SelectList(_context.Uczen, "ID", "ID");
-            ViewData["ZbiorkaID"] = new SelectList(_context.Zbiorka, "ID", "ID");
+            ViewData["UczenID"] = new SelectList(_context.Uczen, "ID", "Imię");
+            ViewData["ZbiorkaID"] = new SelectList(_context.Zbiorka, "ID", "Nazwa");
             return View();
         }
 
@@ -71,9 +71,9 @@ namespace SystemSkarbnik.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID", zbiorkaUczen.KlasaID);
-            ViewData["UczenID"] = new SelectList(_context.Uczen, "ID", "ID", zbiorkaUczen.UczenID);
-            ViewData["ZbiorkaID"] = new SelectList(_context.Zbiorka, "ID", "ID", zbiorkaUczen.ZbiorkaID);
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa", zbiorkaUczen.KlasaID);
+            ViewData["UczenID"] = new SelectList(_context.Uczen, "ID", "Imię", zbiorkaUczen.UczenID);
+            ViewData["ZbiorkaID"] = new SelectList(_context.Zbiorka, "ID", "Nazwa", zbiorkaUczen.ZbiorkaID);
             return View(zbiorkaUczen);
         }
 
@@ -90,9 +90,9 @@ namespace SystemSkarbnik.Controllers
             {
                 return NotFound();
             }
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID", zbiorkaUczen.KlasaID);
-            ViewData["UczenID"] = new SelectList(_context.Uczen, "ID", "ID", zbiorkaUczen.UczenID);
-            ViewData["ZbiorkaID"] = new SelectList(_context.Zbiorka, "ID", "ID", zbiorkaUczen.ZbiorkaID);
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa", zbiorkaUczen.KlasaID);
+            ViewData["UczenID"] = new SelectList(_context.Uczen, "ID", "Imię", zbiorkaUczen.UczenID);
+            ViewData["ZbiorkaID"] = new SelectList(_context.Zbiorka, "ID", "Nazwa", zbiorkaUczen.ZbiorkaID);
             return View(zbiorkaUczen);
         }
 
@@ -128,9 +128,9 @@ namespace SystemSkarbnik.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "ID", zbiorkaUczen.KlasaID);
-            ViewData["UczenID"] = new SelectList(_context.Uczen, "ID", "ID", zbiorkaUczen.UczenID);
-            ViewData["ZbiorkaID"] = new SelectList(_context.Zbiorka, "ID", "ID", zbiorkaUczen.ZbiorkaID);
+            ViewData["KlasaID"] = new SelectList(_context.Klasa, "ID", "Nazwa", zbiorkaUczen.KlasaID);
+            ViewData["UczenID"] = new SelectList(_context.Uczen, "ID", "Imię", zbiorkaUczen.UczenID);
+            ViewData["ZbiorkaID"] = new SelectList(_context.Zbiorka, "ID", "NAzwa", zbiorkaUczen.ZbiorkaID);
             return View(zbiorkaUczen);
         }
 
